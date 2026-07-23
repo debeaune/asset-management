@@ -14,7 +14,13 @@ class LocationController extends Controller
 
     public function store(Request $request)
     {
-        $location = Location::create($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'building' => 'nullable|string|max:255',
+            'room' => 'nullable|string|max:255',
+        ]);
+    
+        $location = Location::create($validated);
         return response()->json($location, 201);
     }
 
