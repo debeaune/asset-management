@@ -14,7 +14,16 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-        $ticket = Ticket::create($request->all());
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|in:open,in_progress,closed',
+            'priority' => 'required|in:low,medium,high',
+            'equipment_id' => 'required|exists:equipments,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+    
+        $ticket = Ticket::create($validated);
         return response()->json($ticket, 201);
     }
 

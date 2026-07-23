@@ -14,7 +14,16 @@ class EquipmentController extends Controller
 
     public function store(Request $request)
     {
-        $equipment = Equipment::create($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'serial_number' => 'required|string|unique:equipments',
+            'status' => 'required|in:active,inactive,maintenance',
+            'category_id' => 'required|exists:categories,id',
+            'location_id' => 'nullable|exists:locations,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+
+        $equipment = Equipment::create($request->$validated());
         return response()->json($equipment, 201);
     }
 
