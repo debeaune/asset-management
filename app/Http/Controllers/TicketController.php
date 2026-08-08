@@ -34,7 +34,16 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-        $ticket->update($request->all());
+        $validated = $request->validate([
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'status' => 'sometimes|in:open,in_progress,closed',
+            'priority' => 'sometimes|in:low,medium,high',
+            'equipment_id' => 'sometimes|exists:equipments,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+    
+        $ticket->update($validated);
         return $ticket;
     }
 

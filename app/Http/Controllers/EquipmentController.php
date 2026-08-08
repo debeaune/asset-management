@@ -34,10 +34,19 @@ class EquipmentController extends Controller
 
     public function update(Request $request, Equipment $equipment)
     {
-        $equipment->update($request->all());
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'serial_number' => 'sometimes|string|unique:equipments,serial_number,' . $equipment->id,
+            'status' => 'sometimes|in:active,inactive,maintenance',
+            'category_id' => 'sometimes|exists:categories,id',
+            'location_id' => 'nullable|exists:locations,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+    
+        $equipment->update($validated);
         return $equipment;
     }
-
+    
     public function destroy(Equipment $equipment)
     {
         $equipment->delete();
