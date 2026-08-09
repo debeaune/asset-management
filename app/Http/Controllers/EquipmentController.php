@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipment;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EquipmentController extends Controller
 {
     public function index()
     {
-        return Equipment::with(['category', 'location', 'user'])->get();
+        return Inertia::render('Equipments', [
+            'equipments' => Equipment::with('category')->get()
+        ]);
     }
 
     public function store(Request $request)
