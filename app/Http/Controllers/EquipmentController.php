@@ -53,6 +53,6 @@ class EquipmentController extends Controller
     public function destroy(Equipment $equipment)
     {
         $equipment->delete();
-        return response()->json(null, 204);
+        return redirect('/equipments');
     }
 }

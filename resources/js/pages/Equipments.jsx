@@ -1,4 +1,5 @@
 import Layout from './Layout'
+import { router } from '@inertiajs/react'
 
 export default function Equipments({ equipments }) {
     function statusBadge(status) {
@@ -42,6 +43,7 @@ export default function Equipments({ equipments }) {
                                 <th style={{padding: '0.75rem', textAlign: 'left'}}>Série</th>
                                 <th style={{padding: '0.75rem', textAlign: 'left'}}>Status</th>
                                 <th style={{padding: '0.75rem', textAlign: 'left'}}>Catégorie</th>
+                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +57,21 @@ export default function Equipments({ equipments }) {
                                         </span>
                                     </td>
                                     <td style={{padding: '0.75rem'}}>{e.category?.name}</td>
+                                    <td style={{padding: '0.75rem'}}>
+                                        <button 
+                                            style={{backgroundColor: '#3b82f6', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', marginRight: '0.5rem'}}>
+                                                ✏️ Modifier
+                                        </button>
+                                        <button 
+                                            onClick={() => {
+                                                if (confirm('Supprimer cet équipement ?')) {
+                                                    router.delete(`/equipments/${e.id}`)
+                                                }
+                                            }}
+                                            style={{backgroundColor: '#ef4444', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer'}}>
+                                                🗑️ Supprimer
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

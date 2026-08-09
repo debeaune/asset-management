@@ -14,3 +14,5 @@ Route::get('/equipments', [EquipmentController::class, 'index']);
 Route::get('/tickets', [TicketController::class, 'index']);
 
 Route::get('/locations', [LocationController::class, 'index']);
+
+Route::delete('/equipments/{equipment}', [EquipmentController::class, 'destroy']);
