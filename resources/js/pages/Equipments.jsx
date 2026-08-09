@@ -59,6 +59,7 @@ export default function Equipments({ equipments }) {
                                     <td style={{padding: '0.75rem'}}>{e.category?.name}</td>
                                     <td style={{padding: '0.75rem'}}>
                                         <button 
+                                            onClick={() => router.get(`/equipments/${e.id}/edit`)}
                                             style={{backgroundColor: '#3b82f6', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', marginRight: '0.5rem'}}>
                                                 ✏️ Modifier
                                         </button>

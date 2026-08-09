@@ -16,3 +16,7 @@ Route::get('/tickets', [TicketController::class, 'index']);
 Route::get('/locations', [LocationController::class, 'index']);
 
 Route::delete('/equipments/{equipment}', [EquipmentController::class, 'destroy']);
+
+Route::get('/equipments/{equipment}/edit', [EquipmentController::class, 'edit']);
+
+Route::put('/equipments/{equipment}', [EquipmentController::class, 'update']);

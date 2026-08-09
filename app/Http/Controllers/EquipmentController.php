@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Category;
+use App\Models\Location;
 
 class EquipmentController extends Controller
 {
@@ -47,12 +49,21 @@ class EquipmentController extends Controller
         ]);
     
         $equipment->update($validated);
-        return $equipment;
+        return redirect('/equipments');
     }
     
     public function destroy(Equipment $equipment)
     {
         $equipment->delete();
         return redirect('/equipments');
+    }
+
+    public function edit(Equipment $equipment)
+    {
+        return Inertia::render('EquipmentEdit', [
+            'equipment' => $equipment->load('category'),
+            'categories' => Category::all(),
+            'locations' => Location::all(),
+        ]);
     }
 }
