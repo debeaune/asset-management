@@ -28,8 +28,8 @@ class EquipmentController extends Controller
             'user_id' => 'nullable|exists:users,id',
         ]);
 
-        $equipment = Equipment::create($request->$validated());
-        return response()->json($equipment, 201);
+        Equipment::create($validated);
+        return redirect('/equipments');
     }
 
     public function show(Equipment $equipment)
@@ -62,6 +62,14 @@ class EquipmentController extends Controller
     {
         return Inertia::render('EquipmentEdit', [
             'equipment' => $equipment->load('category'),
+            'categories' => Category::all(),
+            'locations' => Location::all(),
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('EquipmentCreate', [
             'categories' => Category::all(),
             'locations' => Location::all(),
         ]);

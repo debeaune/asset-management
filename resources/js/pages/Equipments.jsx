@@ -19,6 +19,12 @@ export default function Equipments({ equipments }) {
                 <h1 style={{fontSize: '1.875rem', fontWeight: 'bold', marginBottom: '1.5rem', color: '#1f2937'}}>
                     🖥️ Parc Informatique
                 </h1>
+
+                <button 
+                    onClick={() => router.get('/equipments/create')}
+                    style={{backgroundColor: '#22c55e', color: 'white', padding: '0.5rem 1.5rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', marginBottom: '1.5rem'}}>
+                    ➕ Nouvel équipement
+                </button>
             
                 <div style={{display: 'flex', gap: '1rem', marginBottom: '1.5rem'}}>
                     <div style={{backgroundColor: 'white', padding: '0.75rem', borderRadius: '0.5rem', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', flex: 1}}>
