@@ -1,58 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🖥️ Parc Informatique — Laravel + Inertia + React
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack asset management application built with Laravel, Inertia.js, and React. Manage IT equipment, tickets, and locations with a modern dashboard interface.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Technologies
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Laravel 13** — PHP framework, API, routing, authentication
+- **Inertia.js** — Bridge between Laravel and React (no separate API needed)
+- **React 19** — Frontend UI components
+- **Tailwind CSS v4** — Styling
+- **Vite 5** — Frontend build tool
+- **MySQL** — Database
+- **Laravel Sanctum** — API authentication
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✅ Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 🔐 Authentication with Laravel Sanctum (register, login, logout)
+- 🖥️ Equipment management (CRUD)
+- 🎫 Ticket management (CRUD)
+- 📍 Location management
+- 📊 Dashboard with statistics (total, active, maintenance)
+- 🎨 Status badges (active, inactive, maintenance)
+- 🗑️ Confirmation modal for deletions
+- 🧭 Navigation between pages
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🏗️ Project Structure
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+/
+├── app/Http/Controllers/
+│   ├── AuthController.php       # Register, login, logout
+│   ├── CategoryController.php   # Categories API
+│   ├── EquipmentController.php  # Equipment CRUD
+│   ├── LocationController.php   # Locations
+│   └── TicketController.php     # Tickets CRUD
+├── resources/js/Pages/
+│   ├── Equipments.jsx           # Equipment dashboard
+│   ├── EquipmentCreate.jsx      # Create equipment form
+│   ├── EquipmentEdit.jsx        # Edit equipment form
+│   ├── Tickets.jsx              # Tickets list
+│   ├── TicketCreate.jsx         # Create ticket form
+│   ├── TicketEdit.jsx           # Edit ticket form
+│   ├── Locations.jsx            # Locations list
+│   └── Layout.jsx               # Navigation layout
+├── database/
+│   ├── migrations/              # Database schema
+│   └── seeders/                 # Test data
+└── routes/
+    ├── web.php                  # Inertia routes
+    └── api.php                  # API routes (Sanctum protected)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 🧠 Technical Highlights
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Inertia.js — The Bridge
+Inertia connects Laravel controllers directly to React components without building a separate API. Controllers return `Inertia::render()` instead of JSON:
 
-## Code of Conduct
+```php
+public function index()
+{
+    return Inertia::render('Equipments', [
+        'equipments' => Equipment::with('category')->get()
+    ]);
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Sanctum Authentication
+API routes are protected by Sanctum middleware:
 
-## Security Vulnerabilities
+```php
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('equipments', EquipmentController::class);
+    Route::apiResource('tickets', TicketController::class);
+});
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Form State with React Hooks
+Forms use `useState` to manage local state before sending to Laravel:
 
-## License
+```jsx
+const [form, setForm] = useState({ name: '', status: 'active' })
+router.post('/equipments', form)
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🗄️ Database Schema
+
+| Table | Description |
+|-------|-------------|
+| users | Authenticated users |
+| categories | Equipment categories |
+| locations | Physical locations (building, room) |
+| equipments | IT assets (laptop, server...) |
+| tickets | Support tickets linked to equipment |
+| personal_access_tokens | Sanctum tokens |
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/debeaune/asset-management
+cd asset-management/src
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+npm run build
+php artisan serve
+```
+
+---
+
+*Built by Marie Laure Debeaune*
