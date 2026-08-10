@@ -5,6 +5,13 @@ import { useState } from 'react'
 export default function Tickets({ tickets }) {
     const [confirmDelete, setConfirmDelete] = useState(null)
 
+    function priorityBadge(priority) {
+        if (priority === 'high') return { backgroundColor: '#fee2e2', color: '#991b1b' }
+        if (priority === 'medium') return { backgroundColor: '#ffedd5', color: '#9a3412' }
+        if (priority === 'low') return { backgroundColor: '#dcfce7', color: '#166534' }
+        return { backgroundColor: '#f3f4f6' }
+    }
+
     return (
         <Layout>
             <div style={{minHeight: '100vh', backgroundColor: '#f9fafb', padding: '2rem'}}>
@@ -32,8 +39,16 @@ export default function Tickets({ tickets }) {
                             {tickets.map(t => (
                                 <tr key={t.id} style={{borderTop: '1px solid #e5e7eb'}}>
                                     <td style={{padding: '0.75rem'}}>{t.title}</td>
-                                    <td style={{padding: '0.75rem'}}>{t.status}</td>
-                                    <td style={{padding: '0.75rem'}}>{t.priority}</td>
+                                    <td style={{padding: '0.75rem'}}>
+                                        <span style={{...priorityBadge(t.status), padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '500'}}>
+                                            {t.status}
+                                        </span>
+                                    </td>
+                                    <td style={{padding: '0.75rem'}}>
+                                        <span style={{...priorityBadge(t.priority), padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '500'}}>
+                                            {t.priority}
+                                        </span>
+                                    </td>
                                     <td style={{padding: '0.75rem'}}>{t.equipment?.name}</td>
                                     <td style={{padding: '0.75rem'}}>
                                         <button 
