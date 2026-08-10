@@ -1,7 +1,10 @@
 import Layout from './Layout'
 import { router } from '@inertiajs/react'
+import { useState } from 'react'
 
 export default function Tickets({ tickets }) {
+    const [confirmDelete, setConfirmDelete] = useState(null)
+
     return (
         <Layout>
             <div style={{minHeight: '100vh', backgroundColor: '#f9fafb', padding: '2rem'}}>
@@ -39,13 +42,9 @@ export default function Tickets({ tickets }) {
                                                 ✏️ Modifier
                                         </button>
                                         <button 
-                                            onClick={() => {
-                                            if (confirm('Supprimer ce ticket ?')) {
-                                                router.delete(`/tickets/${t.id}`)
-                                            }
-                                        }}
-                                        style={{backgroundColor: '#ef4444', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer'}}>
-                                            🗑️ Supprimer
+                                            onClick={() => setConfirmDelete(t.id)}
+                                            style={{backgroundColor: '#ef4444', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer'}}>
+                                                🗑️ Supprimer
                                         </button>
                                     </td>
                                 </tr>
@@ -54,6 +53,26 @@ export default function Tickets({ tickets }) {
                     </table>
                 </div>
             </div>
+            {confirmDelete && (
+                <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <div style={{backgroundColor: 'white', padding: '2rem', borderRadius: '0.75rem', maxWidth: '400px', width: '90%'}}>
+                        <h2 style={{marginBottom: '1rem'}}>Confirmer la suppression</h2>
+                        <p style={{marginBottom: '1.5rem', color: '#6b7280'}}>Cette action est irréversible.</p>
+                        <div style={{display: 'flex', gap: '1rem'}}>
+                            <button 
+                                onClick={() => { router.delete(`/tickets/${confirmDelete}`); setConfirmDelete(null) }}
+                                style={{backgroundColor: '#ef4444', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', flex: 1}}>
+                                Supprimer
+                            </button>
+                            <button 
+                                onClick={() => setConfirmDelete(null)}
+                                style={{backgroundColor: '#6b7280', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', flex: 1}}>
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </Layout>
     )
 }
