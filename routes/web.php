@@ -24,3 +24,9 @@ Route::put('/equipments/{equipment}', [EquipmentController::class, 'update']);
 Route::get('/equipments/create', [EquipmentController::class, 'create']);
 
 Route::post('/equipments', [EquipmentController::class, 'store']);
+
+Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit']);
+Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
+Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
+Route::get('/tickets/create', [TicketController::class, 'create']);
+Route::post('/tickets', [TicketController::class, 'store']);

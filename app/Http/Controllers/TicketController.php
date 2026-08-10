@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Equipment;
 
 class TicketController extends Controller
 {
@@ -26,8 +27,8 @@ class TicketController extends Controller
             'user_id' => 'nullable|exists:users,id',
         ]);
     
-        $ticket = Ticket::create($validated);
-        return response()->json($ticket, 201);
+        Ticket::create($validated);
+        return redirect('/tickets');
     }
 
     public function show(Ticket $ticket)
@@ -47,12 +48,28 @@ class TicketController extends Controller
         ]);
     
         $ticket->update($validated);
-        return $ticket;
+        return redirect('/tickets');
     }
 
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
-        return response()->json(null, 204);
+        return redirect('/tickets');
     }
+
+    public function edit(Ticket $ticket)
+    {
+        return Inertia::render('TicketEdit', [
+            'ticket' => $ticket,
+            'equipments' => Equipment::all(),
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('TicketCreate', [
+            'equipments' => Equipment::all(),
+        ]);
+    }
+
 }
