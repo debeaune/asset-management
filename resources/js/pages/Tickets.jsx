@@ -28,29 +28,29 @@ export default function Tickets({ tickets }) {
                     <table style={{width: '100%', borderCollapse: 'collapse'}}>
                         <thead style={{backgroundColor: '#1f2937', color: 'white'}}>
                             <tr>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Titre</th>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Status</th>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Priorité</th>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Équipement</th>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Actions</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Titre</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Status</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Priorité</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Équipement</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {tickets.map(t => (
                                 <tr key={t.id} style={{borderTop: '1px solid #e5e7eb'}}>
-                                    <td style={{padding: '0.75rem'}}>{t.title}</td>
-                                    <td style={{padding: '0.75rem'}}>
-                                        <span style={{...priorityBadge(t.status), padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '500'}}>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>{t.title}</td>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>
+                                        <span style={{...priorityBadge(t.status), padding: '0.25rem 0.75rem', display: 'inline-block', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '500'}}>
                                             {t.status}
                                         </span>
                                     </td>
-                                    <td style={{padding: '0.75rem'}}>
-                                        <span style={{...priorityBadge(t.priority), padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '500'}}>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>
+                                        <span style={{...priorityBadge(t.priority), padding: '0.25rem 0.75rem', display: 'inline-block', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '500'}}>
                                             {t.priority}
                                         </span>
                                     </td>
-                                    <td style={{padding: '0.75rem'}}>{t.equipment?.name}</td>
-                                    <td style={{padding: '0.75rem'}}>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>{t.equipment?.name}</td>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>
                                         <button 
                                             onClick={() => router.get(`/tickets/${t.id}/edit`)}
                                             style={{backgroundColor: '#3b82f6', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', marginRight: '0.5rem'}}>

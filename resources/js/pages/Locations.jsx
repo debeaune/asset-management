@@ -11,17 +11,17 @@ export default function Locations({ locations }) {
                     <table style={{width: '100%', borderCollapse: 'collapse'}}>
                         <thead style={{backgroundColor: '#1f2937', color: 'white'}}>
                             <tr>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Nom</th>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Bâtiment</th>
-                                <th style={{padding: '0.75rem', textAlign: 'left'}}>Salle</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Nom</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Bâtiment</th>
+                                <th style={{padding: '0.75rem', textAlign: 'center'}}>Salle</th>
                             </tr>
                         </thead>
                         <tbody>
                             {locations.map(l => (
                                 <tr key={l.id} style={{borderTop: '1px solid #e5e7eb'}}>
-                                    <td style={{padding: '0.75rem'}}>{l.name}</td>
-                                    <td style={{padding: '0.75rem'}}>{l.building}</td>
-                                    <td style={{padding: '0.75rem'}}>{l.room}</td>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>{l.name}</td>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>{l.building}</td>
+                                    <td style={{padding: '0.75rem', textAlign: 'center'}}>{l.room}</td>
                                 </tr>
                             ))}
                         </tbody>
